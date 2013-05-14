@@ -121,8 +121,7 @@ SUKO443.PageModules = function(){
         field.onfocus = function(){
             if(this.value == field.value){
             	this.value = '';
-            }  
-        	if (isOldIE){console.log('it is IE7 or 8');}
+            }          	
         };
         field.onblur = function(){
             if(this.value == ''){
@@ -338,7 +337,7 @@ $(function() {
 	SUKO443.PageModules.setLinkTarget();
 
 	SUKO443.Utils.ajaxLoad('sitemap.html #sitemap', '#wrap>footer', 'fatFooterDiv');
-	//SUKO443.Utils.isOldIE();
+	
 
 
 });

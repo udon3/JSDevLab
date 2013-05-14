@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<title>Framework template html5 with shiv</title>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css">
+		<link href="css/global.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/print.css" rel="stylesheet" type="text/css" media="print">
+		
+		<script type="text/javascript" src="js/shivs/modernizr-1.5.min.js"></script>
+		<!--[if lt IE 9]>
+             <script src="js/shivs/html5shiv.js"></script>
+        <![endif]-->
+		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=sunburst"></script>
+	</head>
+	<body>
+		<!-- START:skiplinks -->
+		<div id="accessibility">
+			<span class="access">Skip Links</span>
+            <a href="#main-nav">Jump to main navigation</a>
+            <a href="#main-content">Jump to main content</a></li>
+            <a href="/accessibility.html">Go to accessibility page</a>
+            
+			<!--<ul>
+				<li><a href="#main-nav">Jump to main navigation</a></li>
+				<li><a href="#main-content">Jump to main content</a></li>
+				<li><a href="/accessibility.html">Go to accessibility page</a></li>
+			</ul>-->
+		</div>
+		<!-- END:skiplinks -->
+        
+		<div id="wrap">
+			<header>
+            	<nav role="navigation">
+                    <ul id="main-nav" role="menu">
+                        <li><a href="">About this project</a></li
+                        ><li><a href="">Project Details</a>
+                        <div class="level2" role="navigation" aria-label="secondary navigation">
+                            <ul>
+                                <li><a href="">Sub page 1</a></li>
+                                <li><a href="">Sub page 2</a></li>
+                                <li><a href="">Sub page 3</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="">Sub page 4</a></li>
+                                <li><a href="">Sub page 5</a></li>
+                                <li><a href="">Sub page 6</a></li>
+                            </ul>
+                        </div></li
+                        ><li><a href="">Other News</a></li
+                        ><li><a href="">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="torso">
+                
+                <section role="main" class="printable">			
+                    <h1>Page heading</h1>
+                    <h2>Secondary heading</h2>
+                    <p><a href="http://randd:8080/javascript-concepts/closures.html">http://randd:8080/javascript-concepts/closures.html</a> local page, absolute url</p>
+                    <p><a href="http://randd:8080/boo.xls">http://randd:8080/boo.xls</a> local, absolute path, chosen file type</p>
+                    <p><a href="/javascript-concepts/functions.html">/javascript-concepts/functions.html</a> local, relative path</p>
+                    <p><a href="/javascript-concepts/functions.mp4">/javascript-concepts/functions.mp4</a> local, relative path, NOT chosen file type</p>
+                    <p><a href="http://suko443HASTITLE.com" title="Opens a new window">http://suko443.com</a> external website</p>
+                    <p><a href="https://www.flatfud.co.uk">https://www.flatfud.co.uk</a> external secure website</p>
+                    <p><a href="/javascript-concepts/woo.pdf">/javascript-concepts/woo.pdf</a> local, relative path, chosen file type</p>
+                    <p><a href="http://www.google.com/boo.xls">http://suko443.com/boo.xls</a> external, chosen file type</p>
+                    <p><a href="http://www.google.com/boo.mp4">http://suko443.com/boo.mp4</a> external, NOT chosen file type</p>
+                    
+                    <a class="email" href="mailto:enter_email@ddress.here?subject=My Subject Title&body=You may be interested in this">send to a friend</a>
+                </section>
+                
+                <section>
+<pre class="prettyprint">
+/*
+    *   Open external links and chosen file types (e.g. PDFs) in a new window
+    *   set target="_blank" on external links and chosen filetypes
+    *   add title attribute to inform users 
+    */
+    var setLinkTarget = function(){
+        if (!document.getElementsByTagName) return;
+        var links = document.getElementsByTagName("a");
+        var fileTypes = ['pdf','xls'];
+        var href, 
+            fileName = '';
+        //check whether a link href is external or a chosen file type
+        var _checkLink = function(hrefStr, fileStr){
+            if ((href.indexOf('http') !== -1)&amp;&amp;(href.indexOf(window.location.host) ==-1)){
+                return true;
+            } else {
+                //check if file extention matches fileTypes
+                for(j=0; j&lt;fileTypes.length; j++){
+                    if (href.indexOf(fileTypes[j]) !== -1) {
+                        //store file ext as uppercase string
+                        fileName = fileTypes[j].toUpperCase();
+                        return true;
+                    }else {
+                        fileName = '';
+                    }
+                }
+            }   
+            return;         
+        };
+        //iterate through all links in the document and run _checkLink
+        for (var i=0; i&lt;links.length; i++) {
+            var href = links[i].getAttribute('href');
+            //run the _checkLink function
+            _checkLink(href, fileName);
+            if(_checkLink() == true){
+                links[i].setAttribute('target','_blank');   
+                links[i].setAttribute('title','Opens ' +fileName+ ' in a new window');
+            }
+        }       
+    };
+</pre>
+                </section>
+            </div>
+           
+            
+            <footer role="navigation" aria-label="footer navigation">
+            	<p>&copy;Copyright XX 1234</p>
+                <ul role="menu">
+                	<li><a href=""></a></li>
+                	<li><a href=""></a></li>
+                	<li><a href=""></a></li>
+                </ul>
+            </footer>
+            
+		</div>
+		
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.0.js"></script>-->
+
+		<script type="text/javascript" src="js/scripts.js"></script>
+	</body>
+</html>

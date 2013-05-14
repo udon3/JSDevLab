@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<title>printPage function</title>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css">
+		<link href="css/global.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/print.css" rel="stylesheet" type="text/css" media="print">
+		
+		<script type="text/javascript" src="js/shivs/modernizr-1.5.min.js"></script>
+		<!--[if lt IE 9]>
+             <script src="js/shivs/html5shiv.js"></script>
+        <![endif]-->
+		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=sunburst"></script>
+	</head>
+	<body>
+		<!-- START:skiplinks -->
+		<div id="accessibility">
+			<span class="access">Skip Links</span>
+            <a href="#main-nav">Jump to main navigation</a>
+            <a href="#main-content">Jump to main content</a></li>
+            <a href="/accessibility.html">Go to accessibility page</a>
+            
+			<!--<ul>
+				<li><a href="#main-nav">Jump to main navigation</a></li>
+				<li><a href="#main-content">Jump to main content</a></li>
+				<li><a href="/accessibility.html">Go to accessibility page</a></li>
+			</ul>-->
+		</div>
+		<!-- END:skiplinks -->
+        
+		<div id="wrap">
+			<header>
+            	<nav role="navigation">
+                	<ul id="main-nav" role="menu">
+                    	<li><a href="">About this project</a></li
+                        ><li><a href="">Project Details</a>
+                        <div class="level2">
+                            <ul role="menu">
+                                <li><a href="">Sub page 1</a></li>
+                                <li><a href="">Sub page 2</a></li>
+                                <li><a href="">Sub page 3</a></li>
+                            </ul>
+                            <ul role="menu">
+                                <li><a href="">Sub page 4</a></li>
+                                <li><a href="">Sub page 5</a></li>
+                                <li><a href="">Sub page 6</a></li>
+                            </ul>
+                        </div></li
+                        ><li><a href="">Other News</a></li
+                        ><li><a href="">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="torso">
+                <nav role="navigation">
+                	<ul role="menu">
+                    	<li><a href="">sub nav One</a></li>
+                    	<li><a href="">sub nav Two</a></li>
+                    	<li><a href="">sub nav Three</a></li>
+                    </ul>
+                </nav>
+                <section role="main" class="printable" id="printMe">			
+                    <h1>Page modules</h1>
+
+
+                    <h2>Print function</h2>
+                    <p>Adds a print button</p>
+                    <p>Either print whole page or only the contents of the container in which the button has been added</p>
+
+                    <h3>Usage</h3>
+                    <code>printPage('.printable', false);</code>
+                    <h3>parameters</h3>
+                    <ul>
+                        <li>container - str (required): selector of the containing element to add button to </li>
+                        <li>printAll - boolean : 
+                            <ul>
+                                <li>true (default): prints whole page</li>
+                                <li>false: prints only the contents of 'container'</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Next steps:</h3>
+                    <ul>
+                        <li>Add a test to check if the jquery library is already inside the <code>head</code> when providing rudimentary mark up to a new window</li>
+                        <li>Be more strict about where you can insert the button? (Currently anywhere in the DOM) - or is this overkill?</li>
+                        <li>Test on Mac browsers. Also research: printing from their mobile devices</li>
+                        <li>Set it up as a jquery plugin - a good excercise in encapsulation!</li>
+                        <li>See how it breaks when minified (!)</li>
+                        
+                    </ul>
+
+<pre class="prettyprint">
+/*
+*   Print page function 
+*   append a print button to container element - print page or only the contents of container   
+*   printPage(selector [, boolean][, URL])
+*   @params     container (required): selector of the containing element to add button to
+*               printAll  : true (default): prints whole page
+*                           false: prints only the contents of 'container'
+*                           (Opens printWindow.html, which runs the script to fetch content from parent)
+*               newWinURL : URL string - path to html file
+*/
+var printPage = function(container, printAll, newWinURL){
+    var printButton = '&lt;button href="#" class="printButton">Print&lt;/button>';
+    var variableName = container;
+    $(container).prepend(printButton);
+
+    if($('.printButton').length > 0){
+        $('.printButton').on('click', function(e){
+            if(printAll == true || printAll == undefined){
+                window.print();
+                return;
+            } else {
+                //open new window and load the contents of 'container'
+                var printWindow = window.open(newWinURL,'printWindow','left=100,top=100,width=600px,height=600,scrollbars=yes,status=yes,toolbar=no,menubar=yes,location=yes',false);
+                newWinURL = '';
+                var contentFromParent = $(container).eq(0).html();
+                //check if target html page is specified
+                if((newWinURL == '')||(newWinURL == undefined)){
+                    //if not specified, add neccessary mark-up to new window document(copy from parent)
+                    //do the copying:
+                    var parentHeadContent = $('head').html();
+                    //do the writing:
+                    var newWinMarkUp = '&lt;!DOCTYPE html>&lt;head>'+parentHeadContent+'&lt;style>button.printButton {display:none;}&lt;/style>&lt;/head>&lt;body>';
+                        newWinMarkUp += '&lt;div id="wrap">';
+                        newWinMarkUp += contentFromParent;
+                        newWinMarkUp += '&lt;/div>';
+                        newWinMarkUp += '&lt;script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">&lt;/script>'; //may be need another test to check if library is already inside the &lt;head>?
+                        newWinMarkUp += '&lt;/body>&lt;/html>';
+                    printWindow.document.write(newWinMarkUp);
+                } else{
+                    
+                    var newWinBody;
+                    function ieLoaded(){
+                        newWinBody = printWindow.document.getElementsByTagName('body');
+                        if (newWinBody[0]==null){
+                            //page not yet ready
+                            setTimeout(ieLoaded, 10);
+                        } else {
+                            printWindow.onload = function(){
+                                printWindow.alert('now working for all?');
+                                printWindow.document.getElementById('wrap').innerHTML = contentFromParent;          
+                            }
+                        }
+                    }
+                    IEloaded();
+                }
+                printWindow.focus();
+                printWindow.print();
+                //printWin.close(); //not sure if this is a good idea, so not using for now
+            }
+        }); 
+    }
+};
+
+</pre>
+
+                    <h3>Stuff learned the hard way</h3>
+                    <p>No simple way to get browsers to print a section of a page</p>
+
+                    <h4><code>window.opener</code></h4>
+                    <p>Open an existing html file in a new window and load specified content from parent window...use <a href="http://www.codeproject.com/Articles/25388/Accessing-parent-window-from-child-window-or-vice"><code>window.opener</code></a>, which references the parent's window opbject. </p>
+                    <p>Firefox doesn't allow <code>window.close</code> on a window that hasn't been opened by the same operation, so pointless adding a close button on the new window.</p>
+                    
+                    <h4>IE's lack of support for <code>getElementsByClassName</code> and the parent window object</h4>
+                    <p>Had a <code>window.opener</code> issue, due to lack of support for <code>getElementsByClassName</code> in IE. I wanted to simple do this: <code>contentFromParent = window.opener.document.getElementsByClassName('printable')[0].innerHTML</code>. Tried the various getElementsByClassName functions on offer to get around IE's lack of support:</p>
+<pre>function getElementsByClassName(node, classname) {
+    var a = [];
+    var re = new RegExp('(^| )'+classname+'( |$)');
+    var els = node.getElementsByTagName("*");
+    for(var i=0,j=els.length; i&lt;j; i++)
+        if(re.test(els[i].className))a.push(els[i]);
+    return a;
+}
+var elementsWithCLass = getElementsByClassName(document.body,'elementClass');</pre>
+
+                    <p>Resorted to using jQuery to get around this, as it's simpler and the script is using jQuery anyway. Finding this syntax was useful: <a href="http://api.jquery.com/jquery/#selector-context"><code>$('.myClassName', window.opener.document)</code></a> (equivalent to <code>$(window.opener.document).find('.myClassName')</code>) or access the jQuery object directly:<code>window.opener.jQuery('.myClassName')</code></p>
+<pre>var contentFromParent = $('.printable', window.opener.document).eq(0).html();
+                                //window.opener.jQuery('.printable') //also works</pre>
+                    
+                    <h4>Moved the function from the newwin html file to the script file.</h4>
+                    <p>This lead me to more javascript lessons, this time regarding scope and  reference to parent/child windows</p>
+                    <p>When running the function from the new window, <code>window.opener</code> referred to the parent window object, but running it from inside the open window function via <code>newWindowVariable.onload</code>, <code>window.opener</code> returned <code>null</code>.</p>
+<pre>printWindow.onload = function() {
+    this.alert('hey');
+    //loadPrintableFromParent(printWindow);
+
+    //var printAreaClass = '.printable';//'.printable';
+    var contentFromParent = $('.printable').eq(0).html();
+    printWindow.document.getElementById('wrap').innerHTML = contentFromParent;
+};</pre>
+                    
+                    <p>Content from the parent window could now be accessed without referring to <code><code>window.opener</code>, so this was now fine:</code> <code>var contentFromParent = $(container).eq(0).html();</code> (I should've planned this script more thoroughly before starting!)</p>
+                    <p>In the same vein, to access objects in the new window, I needed to refer to the wew window variable: <code>printWindow.document.getElementById('wrap') </code>etc..</p>
+
+                    <h4><a href="http://stackoverflow.com/questions/16484546/javascript-onload-not-firing-in-ie-window-open-reference-issue"><code>.onload</code> not firing in IE? window.open reference issue?</a></h4>
+
+                    <p>I asked the question, then I found this after a few pointers <a href="http://stackoverflow.com/questions/245124/setting-onload-event-for-newly-opened-window-in-ie6">"IE doesn't return any status from window.open() which means you can open a page and try to access it BEFORE onload is available."</a>. </p>
+
+                    <p>While scrabbling around for a solution, I came across someone's  novel way of feature detecting for IE9: <code>if (!$.support.htmlSerialize && !$.support.opacity)</code> [but I didn't want to go down this precarious root, for future-proofing reasons.</p>
+
+                </section>
+                
+            </div>
+           
+            
+            <footer role="navigation" aria-label="footer navigation">
+            	<p>&copy;Copyright XX 1234</p>
+                <ul role="menu">
+                	<li><a href=""></a></li>
+                	<li><a href=""></a></li>
+                	<li><a href=""></a></li>
+                </ul>
+
+            </footer>
+            
+		</div>
+		
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.0.js"></script>-->
+
+		<script type="text/javascript" src="js/scripts.js"></script>
+	</body>
+</html>
