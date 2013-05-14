@@ -1,0 +1,290 @@
+/*------- GLOBAL STYLE SHEET -------
+1. RESET
+2. UTILITIES
+3. TYPOGRAPHY
+4. STRUCTURE - GLOBAL
+5. STRUCTURE - CONTENT
+6. PAGE SPECIFIC 
+7. FORMS
+8. DATA TABLES
+
+
+-----------------------------------
+site colors:
+main text black: #333
+faint blue bg: #
+dk blue text and bg: #
+mid blue text: #
+green text: #
+----------------------------------*/
+
+/*---RESET---
+c.f. normalize.css*/
+
+/*--------UTILITIES-------*/
+/* clearing */
+/* Contain floats: h5bp.com/q */ 
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
+/* image replacement */
+.mir { letter-spacing:-1000em; text-indent:-999em; }
+
+.hide {display:none!important;}
+.offpg {position:absolute; top:-9999em; left:-9999em;}
+.fl {float:left;}
+.fr {float:right;}
+.clr {clear:both;}
+.blk {display:block;}
+.nowrap {white-space:nowrap;} 
+
+.lpad0 {padding-left:0!important;}
+.bmrg0 {margin-bottom:0!important;}
+
+/* tests*/
+img:not([alt]){border:solid 5px red;}/*highlight images without an alt attribute*/
+
+/*---------------------------
+--------- TYPOGRAPHY --------
+----------------------------*/
+html {
+	font-size:62.5%;/*1rem=16px (or 10px=0.625rem) - reset font sizes so 1rem=10px.*/
+}
+body {
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size:14px;
+	font-size:1.4rem;
+	line-height:1.4;
+	color:#000;
+}
+
+/*---- embedded fonts -----*/
+
+
+/*---- headings ----*/
+h1 {
+	font-size:20px;
+	font-size:2rem;
+}
+h2 {
+	font-size:16px;
+	font-size:1.6rem;
+}
+h3 {
+	font-size:15px;
+	font-size:1.5rem;
+	font-weight:700;
+}
+h4 {
+	font-size:14px;
+	font-size:1.4rem;
+	font-style: italic;
+	font-weight:700;
+}
+/*----- content paragraphs + lists -----*/
+
+section p,
+article p,
+section ul,
+article ul {
+	font-size:14px;
+	font-size:1.4rem;
+	margin-bottom:1em;
+	font-weight:normal;
+}
+section p.footnote, 
+article p.footnote {
+	font-size:12px;
+	font-size:1.2rem;
+}
+
+
+section ul, section ol,
+article ul, article ol {margin-bottom:1em;}
+section li,
+article li {
+	list-style:disc outside none;
+	margin-left:15px;
+}
+section dl,
+article dl {
+	font-size:1em;
+	margin-bottom:1em;
+}
+section blockquote,
+article blockquote {
+	font-size:1em;
+	padding:0 20px 10px;
+}
+
+code, pre {color:green;}
+/*----- links -----*/
+a {
+	color:#000;
+	text-decoration:underline;
+}
+a:hover, a:focus {
+	color:red;
+	text-decoration:none;
+}
+a[href^="http"] {
+	/*progressive enhancement: styling for external links*/
+}
+
+
+
+
+/*---------------------------------
+ * ------ STRUCTURE - GLOBAL ------
+ * -------------------------------*/
+/*--- skip links ---*/
+#accessibility a,
+#accessibility .access {
+	position:absolute;
+	top:-999em; left:-999em;
+}
+/*reveal when in focus*/
+#accessibility a:focus {
+	top:0; left:0;
+	padding:10px;
+	background:#fff;
+	border:2px red dotted;
+}
+
+/*--- layout ---*/
+#wrap {
+	width:100%;
+}
+header, #torso, footer {
+	width:960px;
+	margin:0 auto;
+}
+/* screen size considerations
+@media screen and (max-width: 800px) {
+	#wrap #centre 	{
+		width:80%;
+	}	
+}*/
+/* scalable images
+img  {
+	max-width:100%; 
+}*/
+
+header {
+	position:relative;
+}
+nav ul {	
+	list-style:none;
+}
+/*primary navigation*/
+header nav {
+	text-align:center;
+	border:1px solid #ccc;
+}
+header nav ul {
+	clear:both;
+}
+header nav > ul > li {
+	display:inline-block;
+	border:1px solid #ccc;
+	padding:15px;
+	margin:0;
+}
+	.ie7 header nav > ul > li {
+		display:inline;
+	}
+header nav ul li a {
+	
+}
+header nav > ul > li a:hover,
+header nav > ul > li a:focus {
+	
+}
+header .mainnav ul li.active a {
+	
+}
+/*header nav level 2*/
+header nav .level2 {
+	display:none;
+	background:#fff; 
+	border:solid 1px #ccc;
+    position: absolute;
+    top: 50px;
+    left: 0;
+	height: auto;
+    width: 99%;
+    z-index: 9000;
+}
+header nav ul > li:hover > .level2 {
+    display: block;
+} 
+header nav .level2 ul {
+	display:inline-block;
+    background:#ccc;
+}	
+	.ie7 header nav .level2 ul {
+		display:inline;
+	}
+header nav .level2 ul li {
+	
+}
+header nav .level2 ul li a {
+	
+}
+
+/*secondary navigation*/
+
+/*main body of page*/
+div#torso {
+
+}
+
+/*page footer*/
+#wrap > footer {
+	clear:both;
+	border-top:1px solid #ccc;
+	padding: 20px 0;
+}
+
+#wrap > footer ul li {
+	float:left;	
+	list-style:none;
+}
+#wrap > footer ul li a {
+	
+}
+#wrap > footer ul li a:hover {
+	
+}
+
+/*----------------------------------
+ * ------ STRUCTURE - CONTENT ------
+ * --------------------------------*/
+
+
+/*--- sidebar ---*/
+aside {
+	 width:230px;
+	 float:left; 
+}
+
+
+
+/*----------------------------------
+ * --------- PAGE SPECIFIC ---------
+ * --------------------------------*/
+
+/*----homepage-----*/
+
+/*----------------------------------
+ * ------------ FORMS --------------
+ * --------------------------------*/
+ form input {
+ 	border:solid 1px #ccc;
+ 	padding:.5em;
+ }
+
+/*----------------------------------
+ * ----------- DATA TABLES ---------
+ * --------------------------------*/

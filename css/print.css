@@ -1,0 +1,36 @@
+/*-------------------------------
+--------PRINT STYLE SHEET -------
+---------------------------------*/
+
+body {
+	font-family:Times, Times New Roman, serif; 
+	font-size:12pt;
+	line-height:1.4;
+	color:#000;
+}
+
+
+
+/* remove items */
+a.skip, nav, .noprint {
+	display: none;
+}
+
+
+/* set widths and margins */
+div, section {
+	width: 100%; 
+	margin: 0; 
+	float: none;
+}
+<br>
+
+
+a:link, a:visited {
+	color:#555;
+}
+/*print URL of links*/
+a:link:after, a:visited:after {
+  content: " (" attr(href) ") ";
+  font-size: 90%;
+}

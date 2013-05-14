@@ -1,0 +1,8 @@
+/*----- IE 6/7 SPECIFIC STYLE SHEET -------
+Uses * and _ hacks where neccessary
+--------------------------------------------*/
+
+.some_selector {
+	position:relative;
+	/*fix CSS3 PIE and z-index issue : http://css3pie.com/documentation/known-issues/*/
+}
