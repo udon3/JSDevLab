@@ -1,196 +1,118 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>jQuery plugins</title>
-	<link href="css/global.css" rel="stylesheet" type="text/css" media="screen">
-	<style>
-		.accordion {background: #ccc;}
-		.accordion h3 {border:solid 1px black;}
-		.optionsbox {border: solid 1px orange;}
-		.accordion .toggle {background: green; padding: 5px;}
-	</style>
-</head>
-<body>
-	<div id="wrap">
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<title>JSDevLab</title>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css">
+		<link href="css/global.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/print.css" rel="stylesheet" type="text/css" media="print">
 		
-<h1>The Accordify plugin</h1>
-<!-- this plugin took me a whole day to create - still needs work
-
-	how about unit testing?
-	how about backbuttons and deep-linking?
-
-	need to test with various different content
-	anymore options to add?
-
-	-->
+		<script type="text/javascript" src="js/shivs/modernizr-1.5.min.js"></script>
+		<!--[if lt IE 9]>
+             <script src="js/shivs/html5shiv.js"></script>
+        <![endif]-->
 		
-	<div class="optionsbox">
-		<h2>Set options:</h2>
-		<form action="">
-			<select name="initialStateSet" id="initialStateSet">
-				<option value="firstOnly">initialise with first panels open</option>
-				<option value="allOpen">initialise with all open</option>
-				<option value="allClosed">initialise with all closed</option>
-			</select>
-			<button class="" data-openMultiple="false">disable multiple open</button>
-		</form>
-		<pre>
-header: 'h4',
-panel: 'div',
-initialState: 'firstOnly', 'allOpen' , 'allClosed'
-openMultiple: true
-		</pre>
+	</head>
+	<body>
+		<!-- START:skiplinks -->
+		<div id="accessibility">
+			<span class="access">Skip Links</span>
+            <a href="#main-nav">Jump to main navigation</a>
+            <a href="#main-content">Jump to main content</a></li>
+            <a href="/accessibility.html">Go to accessibility page</a>
+            
+			<!--<ul>
+				<li><a href="#main-nav">Jump to main navigation</a></li>
+				<li><a href="#main-content">Jump to main content</a></li>
+				<li><a href="/accessibility.html">Go to accessibility page</a></li>
+			</ul>-->
+		</div>
+		<!-- END:skiplinks -->
+        
+		<div id="wrap">
+			<header>
+            	<nav role="navigation">
+                    <ul id="main-nav" role="menu">
+                        <li><a href="">About this project</a></li
+                        ><li><a href="">Project Details</a>
+                        <div class="level2" role="navigation" aria-label="secondary navigation">
+                            <ul>
+                                <li><a href="jquery/index.html">jQuery plugins</a></li>
+                                <li><a href="">Sub page 2</a></li>
+                                <li><a href="">Sub page 3</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="">Sub page 4</a></li>
+                                <li><a href="">Sub page 5</a></li>
+                                <li><a href="">Sub page 6</a></li>
+                            </ul>
+                        </div></li
+                        ><li><a href="">Other News</a></li
+                        ><li><a href="">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <form id="search" method="get" action="">
+                    <label for="searchField">Search:</label>
+                    <input id="searchField" type="text" value="Search text"/>
+                </form>
+            </header>
+            <div id="torso">
+                <section role="main" class="printable">			
+                    <h1>jQuery plugins project</h1>
+                    
+	                <nav role="navigation" aria-label="secondary navigation">
+		            	<ul role="menu">
+		                	<li><a href="accordify.html">accordify</a></li>
+		                	<li><a href="">sub nav Two</a></li>
+		                	<li><a href="">sub nav Three</a></li>
+		                </ul>
+		            </nav>
+                    <h2>Secondary heading</h2>
+                    <h3>3rd heading</h3>
+                    <p>The section element represents a section of a document, typically one that includes a heading. It’s used to enclose a thematic grouping of content.</p>
+        
+                    <p>It’s similar to a div though it carries more semantic meaning since the content inside the section tags should be related. The key to choosing the semantic tag over a div is for the content to be related in some way.</p>
+                    
+                    <a class="email" href="mailto:enter_email@ddress.here?subject=My Subject Title&body=You may be interested in this">send to a friend</a>
+                </section>
+                <article>
+                	<p>The article element represents a section of content that forms an independent part of a document or site. It represents a section of self-contained content.</p>
+                    <ul>
+                        <li>xx</li>
+                        <li>yy</li>
+                        <li>zz</li>
+                    </ul>
+                    <p>section and article are similar. The difference is that an article is self-contained. It can stand on it’s own. A section isn’t. You can have multiple sections inside an article and you can have multiple articles inside a section. You can nest sections within sections and articles within articles.</p>
+                </article>
+                <aside>
+                    sidebar
+                </aside>
 
-	</div>
-
-
-
-
-		<h2 class="h3-type">Example 1: </h2>
-			
-			
-
-			<div id="accordion1" class="accordion" role="tablist">
-				
-				<h3 role="tab">navigable + no auto height</h3>
-				<div role="tabpanel">
-					<pre>
-$('#accordion1').accordify({
-});
-					</pre>
-				</div>
-				<h3 role="tab">accordion header 2</h3>
-				<div role="tabpanel">
-					accordion segment content 2.
-					Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. 
-				</div>
-				<h3 role="tab">accordion header 3</h3>
-				<div role="tabpanel">
-					accordion segment content 3.
-					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. 
-				</div>
-			</div>
-
-
-
-			<h2 class="h3-type">Example 2: </h2>
-			<p>Actually, this could be done simply without the use of the UI plugin</p>
-			<div id="accordion2" class="accordion" role="tablist">
-				<h3 role="tab">collapsible + togglable accordion</h3>
-				<div role="tabpanel">
-					<pre>
-$('#accordion2').accordify({
-});
-					</pre>
-				</div>
-				<h3 role="tab">accordion header 2</h3>
-				<div role="tabpanel">
-					accordion segment content 2.
-					Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. 
-				</div>
-				<h3 role="tab">accordion header 3</h3>
-				<div role="tabpanel">
-					accordion segment content 3.
-					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. 
-				</div>
-			</div>
-
-
-
-			<h2 class="h3-type">Example 3: </h2>
-			<p>When very long accordions are opened, the content sometimes opens with the top out of view of the viewport, neccessitating the user to scroll up. This script makes use of the <code>change</code> event to scroll the opened content to top. </p>
-			<div id="accordion3" class="accordion" role="tablist">
-				<h3 id="one" role="tab">with additional scroll script</h3>
-				<div role="tabpanel">
-					<pre>
-$('#accordion3').accordify({
-	
-});
-
-					</pre>
-					<p>accordion activate adds event that fires after panel is activated. see the <a href="http://api.jqueryui.com/accordion/#event-activate">official documentation on jQuery UI accordion</a></p>
-				</div>
-				<h3 id="two" role="tab">accordion tooooooooo</h3>
-				<div role="tabpanel">
-					accordion segment content 2.
-					Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar.
-				</div>
-				<h3 id="three" role="tab">accordion header threeeeeee</h3>
-				<div role="tabpanel">
-					accordion segment content 3.
-					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar.
-				</div>
-			</div>
-
-
-			<h2 class="h3-type">Linking to an accordion section (from external page or same page)</h2>
-			<p>The function <code>autoOpenSeg</code> checks for strings after the hash in <code>document.location</code> then triggers the cllck event on it (the function is called on document.ready.</p>
-
-			<p>However, on its own it won't work if the section is linked from the same page. For this, use the <a href="http://benalman.com/projects/jquery-hashchange-plugin/">jquery hashchange plugin</a> and bind autoOpenSeg to the hashchange event.</p>
-			<p><a href="#three">open "accordion threeeeeee" above.</a></p>
-			<p>Note that the hashchange plugin is primarily useful for enabling "basic bookmarkable #hash history".</p>
-			<p><a href="#two">open "accordion tooooooo" above, then test the back button.</a></p>
-
-	</div>
-
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/plugins/jquery.accordify.js"></script>
-	<script type="text/javascript">
+            </div>
+           
+            
+            
+            <footer role="navigation" aria-label="footer navigation">
+            	<p>&copy;Copyright XX 1234</p>
+                <ul role="menu">
+                	<li><a href=""></a></li>
+                	<li><a href=""></a></li>
+                	<li><a href=""></a></li>
+                </ul>
+            </footer>
+            
+		</div>
 		
-		
-			
-		$(document).ready(function(){
-			//initialise accordify with some defaults:
-			$('.accordion').accordify({
-						header: 'h3',
-						panel: 'div',
-						initialState: 'firstOnly',
-						toggleButtonClass: 'toggle'
-					});
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.0.js"></script>-->
 
-
-			
-
-
-
-
-
-			//DEMO: allow user to change initial state
-			
-			//when user selects an option from the select dropdown...
-			$('#initialStateSet').change(function(){
-				initialStateFn($(this).val());
-			});
-//function that allows the initial state option to be changed
-			var initialStateFn = function(the_value){		
-				//set script options to overwrite the defaults
-				$('.accordion').accordify({
-						header: 'h3',
-						panel: 'div',
-						initialState: the_value,
-						openMultiple: true
-					});
-				
-			}
-			//set openMultiple to false
-			$('.optionsbox button').click(function(e){
-				console.log('hi');
-				$('.accordion').accordify({
-						header: 'h3',
-						panel: 'div',
-						openMultiple: false
-					});
-				e.preventDefault();
-			});
-			
-
-
-
-		});
-		
-
-	</script>
-
-</body>
+		<script type="text/javascript" src="js/scripts.js"></script>
+	</body>
 </html>

@@ -10,16 +10,10 @@
 				openAll, closeAll, default (first open) - boolean
 			multiple_open - panels can be opened independently
 
-	initialise: 
-	$('.accordionWrapper').accordify({
-		header: 'h3',
-		panel: 'div',
-		openAll: true,
-		openMultiple: true
-	})
+	
 */
 
-(function($){
+;(function($){
 
 	$.fn.accordify = function(options){
 		//default options settings:
@@ -27,19 +21,78 @@
 			header: 'h4',
 			panel: 'div',
 			initialState: 'firstOnly', //'allOpen' , 'allClosed'
-			openMultiple: true,
-			toggleButtonClass: undefined //this only works with openMultiple set to true
-		}
+			openMultiple: false, //multiple open is disabled by default
+			toggleButtonClass: undefined, //this only works with openMultiple set to true
+			toggleButtonText: 'Open/Close All',
+			openAllButtonText: 'Open all panels',
+			closeAllButtonText: 'Close all panels'
+		};
+		
 		$.extend(defaults, options);
 		
+
+			
+
 		//define variables
-		var $collection = this;
-		var headers,
-			panels;
-		//console.log($collection[0]);
-		$collection.each(function(i){
+		var $collection = this,
+			headers,
+			panels,
+			currentState; //defines class for currrent state of the accordion
+			
+
+		//a set of reusable functions:
+		var showHideObj = {
+			openPanel: function(panel){				
+				panel.show(500)
+					.attr('data-opened', true)
+					.addClass('opened')
+					.prev().addClass('open');
+				panel.parent().attr('data-current-state','partialopen');
+			},
+			closePanel: function(panel){
+				panel.hide(500)
+					.attr('data-opened', false)
+					.removeClass('opened')
+					.prev().removeClass('open');
+			},
+			openCloseAllButton: function(){
+				//append the toggle button	
+				$collection.prepend('<a href="#" class="' +defaults.toggleButtonClass+ ' ' +currentState+ '"">' +defaults.toggleButtonText+ '</a>');
+
+				//bind click event to button
+				$('.' + defaults.toggleButtonClass).off('click')
+												   .on('click', function(e){
+
+														var $this = $(this);
+														var $thisParent = $this.parent($collection);
+														var $panelset = $thisParent.children(defaults.panel);
+														
+														//collection set - all closed or all open?
+														if($thisParent.attr('data-current-state') == 'allopen'){
+															//close all
+															$panelset.hide(500).removeClass('opened')
+															   .attr('data-opened', false);	
+															$this.addClass('openall').text(defaults.openAllButtonText); 
+															$thisParent.attr('data-current-state','allclosed');
+														} else if($thisParent.attr('data-current-state') == 'allclosed'||$thisParent.attr('data-current-state') == 'partialopen'){
+															//open all
+															$panelset.show(500).addClass('opened')
+															   .attr('data-opened', true);			
+															$this.removeClass('openall').text(defaults.closeAllButtonText); 
+															$thisParent.attr('data-current-state','allopen');
+														}
+
+														e.preventDefault();
+
+												   });
+			}
+
+		};
+
+		
+		$collection.each(function(){
 			//get headers and panels for each collection
-			headers = $collection.find(defaults.header),
+			headers = $(this).find(defaults.header),
 			panels = headers.next(defaults.panel);
 			
 			//warn if missing expected headers
@@ -48,10 +101,6 @@
 				return;
 			}
 
-			console.log(this, this.headers);//#accordion1, 2 and 3
-
-
-			//multiple open is enabled by default. If disabled, panels can only close a panel when another is opened within the same collection): 
 			
 			//bind click to headers and call open and close functions:
 			//(unbind the click event first, to prevent function firing twice)
@@ -60,142 +109,97 @@
 				   .on('click', function(){
 						var $this = $(this);
 						var $thisPanel = $this.next(defaults.panel);
+						var $allSiblings = $this.siblings(defaults.panel);
+
 
 						//if multiple open is enabled:
 						if(defaults.openMultiple == true){
 							//call open/close function
-							if(!$thisPanel.hasClass('opened')){
-								openPanel($thisPanel);
+							if (!$thisPanel.hasClass('opened')){
+								showHideObj.openPanel($thisPanel);
 							} else {
-								closePanel($thisPanel);
-							}
-							
-							
+								showHideObj.closePanel($thisPanel);
+							}														
 						} else {
 							//multiple open is disabled
 							//detect if a panel is open in the collection:
-
-							//the header of the currently open panel is unclickable:
 							if($thisPanel.hasClass('opened')){
 								return;
 							} else {								
 								//close any siblings and open panel
-								$this.siblings(defaults.panel).hide(500)
-																.removeClass('opened')
-																.attr('data-opened', false);
-								openPanel($thisPanel);
-							}
-
-							
+								$allSiblings.hide(500)
+										    .removeClass('opened')
+										    .attr('data-opened', false);
+								showHideObj.openPanel($thisPanel);
+							}							
 						
+						} //end if/else
+
+						//if toggle button: determine if the accordion is all open, partially open or all closed
+						//and pdate current-state attribute + toggle button text
+						if(defaults.toggleButtonClass !== undefined){
+							currentState = (function(){
+								if($allSiblings.hasClass('opened')){
+									//partially or all open
+									//test if all open:
+									var openPanelsCount = $('.opened', $this.parent()).size();
+									if(openPanelsCount == $allSiblings.size()){
+										//set collection parent's current-state data attr to allopen
+										$this.parent().attr('data-current-state','allopen')
+													  .find('.' +defaults.toggleButtonClass).text(defaults.closeAllButtonText);										
+									} else {
+										//set collection parent's current-state data attr to partialopen
+										$this.parent().attr('data-current-state','partialopen');
+									}
+								} else {
+									//set collection parent's current-state data attr to allclosed
+									$this.parent().attr('data-current-state','allclosed')
+												  .find('.' +defaults.toggleButtonClass).text(defaults.openAllButtonText);
+									
+								}
+
+							})();
 						}
+
 			});	//end bind clicks to headers			
 			
-			
+	
 
 
 		});
 		
 
-		//open segment
-		function openPanel(panel){ 
-			//console.log('openpanel running');
-			panel.show({
-						duration: 500,
-						complete: function(){ 
-
-						}
-					})
-				.attr('data-opened', true)
-				.addClass('opened');
-		}
-
-		//close segment
-		function closePanel(panel){
-			panel.hide({
-						duration: 500,
-						complete: function(){ 
-
-						}
-					})
-				.attr('data-opened', false)
-				.removeClass('opened');
-		}
-		//open all 
-		function openAll(){
-			headers.each(function(){
-				$(this).addClass('open');
-			});
-			panels.each(function(){
-				openPanel($(this));
-				$(this).addClass('opened')
-					   .attr('data-opened', true);
-			});
-			console.log(panels);
-			
-		}
-		// close all
-		function closeAll(){
-			headers.each(function(){
-				$(this).removeClass('open');
-			});
-			panels.each(function(){
-				closePanel($(this));
-				$(this).removeClass('opened')
-					   .attr('data-opened', false);
-			});
-		}
-
+		
 
 		//if the toggleButtonClass option has been set, run the function to open all/close all 
 		if(defaults.toggleButtonClass !== undefined){
-			//console.log('toggle button enabled');
-			console.log($collection);
-			openCloseAllButton();
+			defaults.openMultiple = true;
+			showHideObj.openCloseAllButton();
 		}
-		//open all/close all button
-		function openCloseAllButton(){
-			//append the toggle button
-			$collection.prepend('<a href="#" class="'+defaults.toggleButtonClass+' openall" >Open all</a>');
-
-			//bind click event to button
-			$('.' + defaults.toggleButtonClass).on('click', function(e){
-				var $this = $(this);
-				var $panelset = $this.parent($collection).children(defaults.panel);
-				
-				//first time click should open all 
-				if($this.hasClass('openall')){
-					$panelset.show(500).addClass('opened')
-					   .attr('data-opened', true);;					
-					$this.removeClass('openall').text('Close all');
-				} else {
-					$panelset.hide(500).removeClass('opened')
-					   .attr('data-opened', false);;
-					$this.addClass('openall').text('Open all');
-				}
-				e.preventDefault();
-
-			});
-		}
+		
+		
 
 		//set the onload initial state:
 		switch (defaults.initialState) {
 			case 'firstOnly':
 				//initial state = first open
-				closeAll();
+				showHideObj.closePanel(panels);
 				//open the first panel in each collection:
 				$collection.each(function(){
-					openPanel($(this).children('div:first'));
+					showHideObj.openPanel($(this).children('div:first'));
 
-				});
+				});		
+				$(this).attr('data-current-state','partialopen');;				
 				break;
 
 			case 'allOpen':
-				openAll();
+				showHideObj.openPanel(panels);
+				$(this).attr('data-current-state','allopen');
 				break;
 
 			case 'allClosed':
-				closeAll();				
+				showHideObj.closePanel(panels);
+				$(this).attr('data-current-state','allclosed');
 				break;
 
 			default:
@@ -208,6 +212,7 @@
 		
 
 
+		//open panel via link?
 
 
 

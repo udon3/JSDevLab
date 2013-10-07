@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery plugins</title>
+	<link href="css/global.css" rel="stylesheet" type="text/css" media="screen">
+	<style>
+		.accordion {background: #ccc;}
+		.accordion h3 {border:solid 1px black;}
+		.optionsbox {border: solid 1px orange;}
+		.accordion .toggle {background: green; padding: 5px;}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		
+<h1>jQuery Accordify plugin</h1>
+<!--  - still needs work
+
+	how about unit testing?
+	how about backbuttons and deep-linking?
+
+	anymore options to add?
+
+	-->
+		<ul>
+			<li>dependencies: jQuery library</li>
+			<li>functionality:
+				<p>convert a set of headings(e.g. h3) and content containers(e.g. div) and turn it into an accordion</p>
+				<code>$(collection_set_selector).accordify({options})</code>
+			</li>
+			<li>
+				<h3>options:</h3>
+				<ul>
+					<li><code>header:</code> <i>string</i> element selector <br>(default: 'h4')</li>
+					<li><code>panel:</code> <i>string</i> element selector <br>(default: 'div')</li>
+					<li><code>initialState:</code> <i>string</i> <br> (3 options: <code>firstOnly</code> (default), <code>allOpen</code>, <code>allClosed</code>)</li>
+					<li><code>openMultiple:</code> <i>boolean</i> <br>(default: <code>false</code>)</li>
+					<li><code>toggleButtonClass:</code> <i>string</i> <br>(default: <code>undefined</code>) <br>
+						define a class name to create a button (dynamically builds an anchor tag). <br>Note: <code>openMultiple</code>  will automatically become enabled</li>
+					<li><code>toggleButtonText:</code> <i>string</i> <br>(default: 'Open/Close All')</li>
+					<li><code>openAllButtonText:</code> <i>string</i> <br>(default: 'Open all panels')</li>
+					<li><code>closeAllButtonText:</code> <i>string</i> <br>(default: 'Close all panels')</li>
+			
+				</ul>
+			</li>
+		</ul>
+		
+		<h2 class="h3-type">Demos</h2>
+			
+			
+
+			<div id="accordion1" class="accordion" role="tablist">
+				
+				<h3 id="a1t1" role="tab">jquery accordify example 1</h3>
+				<div role="tabpanel">
+					<h4>initialise:</h4>
+					<pre>
+$('#accordion1').accordify({
+	header: 'h3',
+	panel: 'div',
+	initialState: 'firstOnly'
+});
+					</pre>	
+				</div>
+				<h3 id="a1t2" role="tab">Add any kind of content</h3>
+				<div role="tabpanel">
+					<h4>accordion segment content 2.</h4>
+					<img src="http://placehold.it/300x200/003366" alt="">
+					<p>Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros.  </p>
+					<ul>
+						<li>list item</li>
+						<li>list item</li>
+						<li>list item</li>
+					</ul>
+				</div>
+				<h3 id="a1t3" role="tab">Still need to work on...</h3>
+				<div role="tabpanel">
+					<ul>
+						<li>navigability - anchored links, deep links, browser back button</li>
+						<li>code efficiency - any more improvements?</li>
+						<li>auto height vs fixed height</li>
+						<li>scrolling the page for very long accordion content</li>
+						<li>unit tests - QUnit.js?</li>
+					</ul>
+					<p>When very long accordions are opened, the content sometimes opens with the top out of view of the viewport, neccessitating the user to scroll up. Add script to scrolll page when this happens (make use of the <code>change</code> event to scroll the opened content to top.) </p>
+				</div>
+			</div>
+
+
+<br>
+			<div id="accordion2" class="accordion" role="tablist">
+				<h3 role="tab">jquery accordify example 2</h3>
+				<div role="tabpanel">
+					<h4>initialise:</h4>
+					<pre>
+$('#accordion2').accordify({
+	header: 'h3',
+	initialState: 'allClosed',
+	openMultiple: true, 
+	toggleButtonClass: 'toggle' //openMultiple *must* be set to true!
+});
+					</pre>
+				</div>
+				<h3 role="tab">accordion header 2</h3>
+				<div role="tabpanel">
+					<p>By setting the toggleButtonClass, the toggle button gets turned on. </p>
+					<p>NB: multiple opening of panels must be enabled (<code>openMultiple: true</code>)</p>
+				</div>
+				<h3 role="tab">accordion header 3</h3>
+				<div role="tabpanel">
+					accordion segment content 3.
+					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. 
+				</div>
+			</div>
+
+
+<br>
+			
+			<div id="accordion3" class="accordion" role="tablist">
+				<h3 id="one" role="tab">jquery accordify example 3</h3>
+				<div role="tabpanel">
+					<pre>
+$('#accordion3').accordify({
+	header: 'h3',
+	panel: 'div',
+	initialState: 'allOpen'
+});	
+					</pre>
+					
+				</div>
+				<h3 id="two" role="tab">accordion tooooooooo</h3>
+				<div role="tabpanel">
+					accordion segment content 2.
+					Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar.
+				</div>
+				<h3 id="three" role="tab">accordion header threeeeeee</h3>
+				<div role="tabpanel">
+					accordion segment content 3.
+					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar.
+				</div>
+			</div>
+
+
+
+			<h2 class="h3-type">Linking to an accordion section (from external page or same page)</h2>
+			<p>The function <code>autoOpenSeg</code> checks for strings after the hash in <code>document.location</code> then triggers the cllck event on it (the function is called on document.ready.</p>
+
+			<p>However, on its own it won't work if the section is linked from the same page. For this, use the <a href="http://benalman.com/projects/jquery-hashchange-plugin/">jquery hashchange plugin</a> and bind autoOpenSeg to the hashchange event.</p>
+			<p><a href="#three">open "accordion threeeeeee" above.</a></p>
+			<p>Note that the hashchange plugin is primarily useful for enabling "basic bookmarkable #hash history".</p>
+			<p><a href="#two">open "accordion tooooooo" above, then test the back button.</a></p>
+
+	</div>
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.accordify.js"></script>
+	<script type="text/javascript">
+			
+		$(document).ready(function(){
+
+			//initialise accordify 
+			$('#accordion1').accordify({
+				header: 'h3',
+				panel: 'div',
+				initialState: 'firstOnly'
+			});
+			$('#accordion2').accordify({
+				header: 'h3',
+				panel: 'div',
+				initialState: 'allOpen',
+				toggleButtonClass: 'toggle'
+			});
+			$('#accordion3').accordify({
+				header: 'h3',
+				panel: 'div',
+				initialState: 'allClosed',
+				openMultiple: true,
+				toggleButtonClass: 'toggle'
+			});	
+
+
+			
+
+			
+
+
+
+/*
+
+
+*/
+
+		});//close document.ready
+		
+
+	</script>
+
+</body>
+</html>
