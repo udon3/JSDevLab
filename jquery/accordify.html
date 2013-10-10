@@ -77,7 +77,7 @@ $('#accordion1').accordify({
 				<h3 id="a1t3" role="tab">Still need to work on...</h3>
 				<div role="tabpanel">
 					<ul>
-						<li>navigability - anchored links, deep links, browser back button</li>
+						<li>navigability - anchored links to panel, deep links to panel, browser back button</li>
 						<li>code efficiency - any more improvements?</li>
 						<li>auto height vs fixed height</li>
 						<li>scrolling the page for very long accordion content</li>
@@ -90,7 +90,7 @@ $('#accordion1').accordify({
 
 <br>
 			<div id="accordion2" class="accordion" role="tablist">
-				<h3 role="tab">jquery accordify example 2</h3>
+				<h3 id="a2t1" role="tab">jquery accordify example 2</h3>
 				<div role="tabpanel">
 					<h4>initialise:</h4>
 					<pre>
@@ -102,12 +102,12 @@ $('#accordion2').accordify({
 });
 					</pre>
 				</div>
-				<h3 role="tab">accordion header 2</h3>
+				<h3 id="a2t2" role="tab">accordion header 2</h3>
 				<div role="tabpanel">
 					<p>By setting the toggleButtonClass, the toggle button gets turned on. </p>
 					<p>NB: multiple opening of panels must be enabled (<code>openMultiple: true</code>)</p>
 				</div>
-				<h3 role="tab">accordion header 3</h3>
+				<h3 id="a2t3" role="tab">accordion header 3</h3>
 				<div role="tabpanel">
 					accordion segment content 3.
 					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. 
@@ -116,9 +116,8 @@ $('#accordion2').accordify({
 
 
 <br>
-			
 			<div id="accordion3" class="accordion" role="tablist">
-				<h3 id="one" role="tab">jquery accordify example 3</h3>
+				<h3 id="a3t1" role="tab">jquery accordify example 3</h3>
 				<div role="tabpanel">
 					<pre>
 $('#accordion3').accordify({
@@ -129,12 +128,12 @@ $('#accordion3').accordify({
 					</pre>
 					
 				</div>
-				<h3 id="two" role="tab">accordion tooooooooo</h3>
+				<h3 id="a3t2" role="tab">accordion tooooooooo</h3>
 				<div role="tabpanel">
 					accordion segment content 2.
 					Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar.
 				</div>
-				<h3 id="three" role="tab">accordion header threeeeeee</h3>
+				<h3 id="a3t3" role="tab">accordion header threeeeeee</h3>
 				<div role="tabpanel">
 					accordion segment content 3.
 					Quisque vitae enim eu mauris suscipit porttitor ut ut libero. Curabitur sit amet libero at massa feugiat scelerisque. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar. Sed placerat adipiscing ornare. Duis tristique tincidunt dolor, a tempus turpis lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquet, nibh dapibus lobortis porta, diam felis ullamcorper enim, nec eleifend ligula risus quis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut nec commodo eros. Vivamus ut porta metus. Duis ligula orci, laoreet viverra ullamcorper at, condimentum ut ipsum. Nunc quis orci in ipsum pretium pulvinar.
@@ -155,6 +154,7 @@ $('#accordion3').accordify({
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/plugins/jquery.accordify.js"></script>
+	<script src="js/plugins/hashchange.js"></script>
 	<script type="text/javascript">
 			
 		$(document).ready(function(){

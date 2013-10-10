@@ -27,7 +27,7 @@
 			openAllButtonText: 'Open all panels',
 			closeAllButtonText: 'Close all panels'
 		};
-		
+
 		$.extend(defaults, options);
 		
 
@@ -48,12 +48,19 @@
 					.addClass('opened')
 					.prev().addClass('open');
 				panel.parent().attr('data-current-state','partialopen');
+				scrollToOpenPanel();
 			},
 			closePanel: function(panel){
 				panel.hide(500)
 					.attr('data-opened', false)
 					.removeClass('opened')
-					.prev().removeClass('open');
+					.prev().removeClass('open'); //this only works for multiOpen
+			},
+			 closeSiblings: function(otherpanels){
+			 	otherpanels.hide(500)
+						    .removeClass('opened')
+						    .attr('data-opened', false)
+						    .prev().removeClass('open');
 			},
 			openCloseAllButton: function(){
 				//append the toggle button	
@@ -86,6 +93,7 @@
 
 												   });
 			}
+			
 
 		};
 
@@ -107,36 +115,35 @@
 
 			headers.off('click')
 				   .on('click', function(){
-						var $this = $(this);
-						var $thisPanel = $this.next(defaults.panel);
-						var $allSiblings = $this.siblings(defaults.panel);
+						var $this = $(this),
+							$thisPanel = $this.next(defaults.panel),
+							$allSiblings = $this.siblings(defaults.panel),
+							currentlyOpen = $thisPanel.hasClass('opened');
 
 
 						//if multiple open is enabled:
 						if(defaults.openMultiple == true){
 							//call open/close function
-							if (!$thisPanel.hasClass('opened')){
+							if (!currentlyOpen){
 								showHideObj.openPanel($thisPanel);
 							} else {
 								showHideObj.closePanel($thisPanel);
 							}														
 						} else {
-							//multiple open is disabled
-							//detect if a panel is open in the collection:
-							if($thisPanel.hasClass('opened')){
+						//multiple open is disabled
+							//detect if the panel is already open:
+							if(currentlyOpen){
 								return;
 							} else {								
 								//close any siblings and open panel
-								$allSiblings.hide(500)
-										    .removeClass('opened')
-										    .attr('data-opened', false);
+								showHideObj.closeSiblings($allSiblings);
 								showHideObj.openPanel($thisPanel);
 							}							
 						
 						} //end if/else
 
 						//if toggle button: determine if the accordion is all open, partially open or all closed
-						//and pdate current-state attribute + toggle button text
+						//and update current-state attribute + toggle button text
 						if(defaults.toggleButtonClass !== undefined){
 							currentState = (function(){
 								if($allSiblings.hasClass('opened')){
@@ -167,9 +174,6 @@
 
 
 		});
-		
-
-		
 
 		//if the toggleButtonClass option has been set, run the function to open all/close all 
 		if(defaults.toggleButtonClass !== undefined){
@@ -214,6 +218,52 @@
 
 		//open panel via link?
 
+		//using hashchange.js plugin
+		//make autoOpenSeg function work for same page links
+		$(window).bind('hashchange', autoOpenPanel);
+			
+		var hashPanelOpened = false;
+		
+		 // checks URL for # and opens accordion if it exists
+		function autoOpenPanel(){
+			var panelId;
+			//the part that triggers the click and loads the url with hash:
+			var url = new String(document.location)//turn location URL into a string
+			var hash = url.indexOf('#'); //store # position
+			//test for # and following string:
+			if (hash > 0 && hash+1 != url.length){ 
+				panelId = (url.slice(hash, url.length)); //store the hash part 
+				
+				$(panelId).click();//trigger the click event on it 
+				
+				hashPanelOpened = true;
+
+			var openPanelPos = parseFloat($(panelId).offset().top);
+			//need to read all other hidden panels heights as zero
+			console.log($('#a1t3').height());
+			console.log(openPanelPos+500);
+			$('html, body').animate({
+				scrollTop: openPanelPos
+			}, 2000);
+			
+			}	
+
+			
+		}
+		autoOpenPanel();
+
+		//STILL TO DO: add script to scroll to correct place	(offsetHeight, offsetTop)	
+		//the part that scrolls the page to correct pace (top of opened panel)
+		function scrollToOpenPanel(){
+			
+		}
+		//should only kick in after the autoOpenPanel has run
+		/*if(hashPanelOpened){
+			scrollToOpenPanel();
+		}*/
+
+
+
 
 
 
@@ -224,7 +274,6 @@
 	};//end of $.fn.accordify assignment
 
 })(jQuery);
-
 
 
 
